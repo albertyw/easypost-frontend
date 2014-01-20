@@ -12,6 +12,15 @@ def hello():
 @app.route("/submit", methods=["POST"])
 def submit():
     name = request.form['name']
+    easypost.Address.create(
+        name = 'Dr. Steve Brule',
+        street1 = '179 N Harbor Dr',
+        city = 'Redondo Beach',
+        state = 'CA',
+        zip = '90277',
+        country = 'US',
+        email = 'dr_steve_brule@gmail.com'
+    )
 
 if __name__ == "__main__":
     app.debug = True
