@@ -4,7 +4,7 @@ function submitAddress(){
   var address_line2 = $("#address-line2").val();
   var city = $("#city").val();
   var region = $("#region").val();
-  var zip = $("#postal-code").val();
+  var postal_code = $("#postal-code").val();
   var country = $("#country").val();
   $.post('/submit',
     {
@@ -13,11 +13,12 @@ function submitAddress(){
       address_line2:address_line2,
       city:city,
       region:region,
-      zip:zip,
+      postal_code:postal_code,
       country:country
     },
     function(data){
-      $("#status").html("Submitted");
+      console.log(data)
+      $("#status").html(data);
     }
     );
 }
