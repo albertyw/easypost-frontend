@@ -1,0 +1,14 @@
+
+Want a free EasyPost shirt? Purchase a label to yourself through EasyPost using these parameters and we'll send you one!
+:name => 'EasyPost',
+:street1 => '164 Townsend St',
+:street2 => 'Unit 1,
+:city => 'San Francisco',
+:state => 'CA',
+:zip => '94107',
+:country => 'US',
+:options => {:print_custom_1 => 'SHIRT SIZE HERE'}
+The parcel is 13 oz and 7" x 6" x 4". And make sure you use your address as to_address and ours as from_address!
+Reply here if you have any questions.
+Best,
+Jarrett
