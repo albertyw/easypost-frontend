@@ -10,8 +10,17 @@ A simplistic frontend for easypost to be used with openbiome.com
 
 ## Questions
  - Address Format
- - International shipping?
+
+- International shipping?
    - customs?
  - Shipping company
  - Parcel dimensions/weight or predefined package size
    - special consideration for shipping poo?
+
+
+ - Shipping with dry ice, declare weight of dry ice
+ - Not hazardous materials
+ - Enter in size dimensions
+ - Currently using Fedex
+ - From 500 Technology Square, Cambridge, MA 02139
+ -
