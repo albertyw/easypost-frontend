@@ -6,7 +6,7 @@
   <div class="control-group">
     <label class="control-label">Full Name</label>
     <div class="controls">
-      <input id="full-name" name="full-name" type="text" class="form-control">
+      <input id="full-name" type="text" class="form-control">
       <p class="help-block"></p>
     </div>
   </div>
@@ -14,7 +14,7 @@
   <div class="control-group">
     <label class="control-label">Address Line 1</label>
     <div class="controls">
-      <input id="address-line1" name="address-line1" type="text" class="form-control">
+      <input id="address-line1" type="text" class="form-control">
       <p class="help-block">Street address, P.O. box, company name, c/o</p>
     </div>
   </div>
@@ -22,7 +22,7 @@
   <div class="control-group">
     <label class="control-label">Address Line 2</label>
     <div class="controls">
-      <input id="address-line2" name="address-line2" type="text" class="form-control">
+      <input id="address-line2" type="text" class="form-control">
       <p class="help-block">Apartment, suite , unit, building, floor, etc.</p>
     </div>
   </div>
@@ -30,7 +30,7 @@
   <div class="control-group">
     <label class="control-label">City / Town</label>
     <div class="controls">
-      <input id="city" name="city" type="text" class="form-control">
+      <input id="city" type="text" class="form-control">
       <p class="help-block"></p>
     </div>
   </div>
@@ -38,7 +38,7 @@
   <div class="control-group">
     <label class="control-label">State / Province / Region</label>
     <div class="controls">
-      <input id="region" name="region" type="text" class="form-control">
+      <input id="region" type="text" class="form-control">
         <p class="help-block"></p>
     </div>
   </div>
@@ -46,7 +46,7 @@
   <div class="control-group">
     <label class="control-label">Zip / Postal Code</label>
     <div class="controls">
-      <input id="postal-code" name="postal-code" type="text" class="form-control">
+      <input id="postal-code" type="text" class="form-control">
       <p class="help-block"></p>
     </div>
   </div>
@@ -54,7 +54,7 @@
   <div class="control-group">
     <label class="control-label">Country</label>
     <div class="controls">
-      <select id="country" name="country" class="form-control">
+      <select id="country" class="form-control">
         {% for country_abbreviation, country in countries %}
           {% if country_abbreviation == "US" %}
             <option value="{{ country_abbreviation }}" selected>{{ country }}</option>
@@ -63,6 +63,35 @@
           {% endif %}
         {% endfor %}
       </select>
+    </div>
+  </div>
+
+  <h2>Shipping Information</h2>
+  <!-- dimensions inputs -->
+  <div class="control-group">
+    <div class="controls">
+      <label class="control-label">Dimensions (inches)</label>
+      <input id="length" type="text" placeholder="L" class="form-control address-dimensions">
+      x
+      <input id="width" type="text" placeholder="W" class="form-control address-dimensions">
+      x
+      <input id="height" type="text" placeholder="H" class="form-control address-dimensions">
+    </div>
+  </div>
+
+  <!-- weight -->
+  <div class="control-group">
+    <label class="control-label">Weight (oz)</label>
+    <div class="controls">
+      <input id="weight" type="text" class="form-control">
+      <p class="help-block"></p>
+    </div>
+  </div>
+
+  <!-- submit button -->
+  <div class="control-group">
+    <div class="controls">
+      <button type="button" class="btn btn-primary" onclick="javascript:submitAddress()">Create Label</button>
     </div>
   </div>
 </div>

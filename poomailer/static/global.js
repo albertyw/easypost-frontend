@@ -20,5 +20,5 @@ function submitAddress(){
       console.log(data)
       $("#status").html(data);
     }
-    );
+  );
 }
