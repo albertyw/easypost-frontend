@@ -6,10 +6,11 @@ from flask import Flask, render_template, request
 app = Flask(__name__)
 
 from ship import ship_to_address
+from countries import COUNTRIES
 
 @app.route("/")
 def hello():
-    return render_template('home.html', title='Home')
+    return render_template('home.html', countries=COUNTRIES, title='Home')
 
 @app.route("/submit", methods=["POST"])
 def submit():
