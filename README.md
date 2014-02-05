@@ -22,5 +22,4 @@ A simplistic frontend for easypost to be used with openbiome.com
  - Not hazardous materials
  - Enter in size dimensions
  - Currently using Fedex
- - From 500 Technology Square, Cambridge, MA 02139
  -
