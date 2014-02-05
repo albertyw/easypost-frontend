@@ -3,7 +3,7 @@ This is the logic for setting up shipping from easypost
 """
 
 import easypost
-from keys import *
+from keys import EASYPOST_API_KEY
 easypost.api_key = EASYPOST_API_KEY
 
 from_address = easypost.Address.create(

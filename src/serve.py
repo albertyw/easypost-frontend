@@ -5,6 +5,7 @@ Base Flask App
 from flask import Flask, render_template, request
 app = Flask(__name__)
 
+from keys import DEBUG
 from ship import ship_to_address
 from countries import COUNTRIES
 
@@ -34,5 +35,6 @@ def submit():
     return status
 
 if __name__ == "__main__":
-    app.debug = True
+    if DEBUG:
+        app.debug = True
     app.run(host='0.0.0.0', port=9001)
