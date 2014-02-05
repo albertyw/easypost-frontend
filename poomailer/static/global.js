@@ -6,6 +6,10 @@ function submitAddress(){
   var region = $("#region").val();
   var postal_code = $("#postal-code").val();
   var country = $("#country").val();
+  var length = $("#length").val();
+  var width = $("#width").val();
+  var height = $("#height").val();
+  var weight = $("#weight").val();
   $.post('/submit',
     {
       name:name,
@@ -14,7 +18,11 @@ function submitAddress(){
       city:city,
       region:region,
       postal_code:postal_code,
-      country:country
+      country:country,
+      length:length,
+      width:width,
+      height:height,
+      weight:weight
     },
     function(data){
       console.log(data)

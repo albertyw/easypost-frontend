@@ -23,7 +23,14 @@ def submit():
         'zip': request.form['postal_code'],
         'country': request.form['country'],
     }
-    status = ship_to_address(address_dict)
+    parcel_info = {
+        'length': request.form['length'],
+        'width': request.form['width'],
+        'height': request.form['height'],
+        'weight': request.form['weight']
+    }
+
+    status = ship_to_address(address_dict, parcel_info)
     return status
 
 if __name__ == "__main__":
