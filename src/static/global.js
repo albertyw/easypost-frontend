@@ -12,8 +12,10 @@ function submitAddress(){
   var width = $("#width").val();
   var height = $("#height").val();
   var weight = $("#weight").val();
-  $.post('/submit',
-    {
+  $.ajax({
+    type:'POST',
+    url:'/submit',
+    data:{
       name:name,
       address_line1:address_line1,
       address_line2:address_line2,
@@ -26,22 +28,33 @@ function submitAddress(){
       height:height,
       weight:weight
     },
-    function(data){
+    success:function(data){
       if(data['status'] == 'error'){
-        $("#status").addClass('alert-danger');
-        $("#status").removeClass('alert-success');
-        $("#status").html(data['message']);
+        showMessage(data['message'], data['status']);
       }else if(data['status'] == 'success'){
-        $("#status").addClass('alert-success');
-        $("#status").removeClass('alert-danger');
         text = 'New label created.  ';
         text = 'Tracking Code: '+data['message']['tracking_code']+' ';
-        text += '<a href="'+data['label_url']+'">Get Label</a>';
-        $("#status").html(text);
+        text += '<a href="'+data['message']['label_url']+'">Get Label</a>';
+        showMessage(text, data['status']);
       }
-      $("#status").show('slow');
     },
-    'json'
-  );
+    error:function(){
+      showMessage('Unknown Error');
+    },
+    dataType:'json'
+  });
   return false;
+}
+function showMessage(message, status){
+  if(status == 'error'){
+    $("#status").addClass('alert-danger');
+    $("#status").removeClass('alert-success');
+  }else if(status == 'success'){
+    $("#status").addClass('alert-success');
+    $("#status").removeClass('alert-danger');
+  }
+  $("#status").html(message);
+  $("#status").show('slow');
+  $("#submitButton").show();
+  $("#submitButtonLoading").hide();
 }

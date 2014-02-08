@@ -39,15 +39,18 @@ def ship_to_address(address_dict, parcel_info):
     except easypost.Error as e:
         return return_json('error', str(e))
 
-    # create shipment
-    shipment = easypost.Shipment.create(
-        to_address = to_address,
-        from_address = from_address,
-        parcel = parcel
-    )
+    try:
+        # create shipment
+        shipment = easypost.Shipment.create(
+            to_address = to_address,
+            from_address = from_address,
+            parcel = parcel
+        )
 
-    # buy postage label with one of the rate objects
-    shipment.buy(rate = shipment.lowest_rate())
+        # buy postage label with one of the rate objects
+        shipment.buy(rate = shipment.lowest_rate())
+    except easypost.Error as e:
+        return return_json('error', str(e))
 
     status = {}
     status['tracking_code'] = shipment.tracking_code
