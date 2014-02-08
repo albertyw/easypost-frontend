@@ -30,8 +30,9 @@ def submit():
         'height': request.form['height'],
         'weight': request.form['weight']
     }
+    dry_ice = request.form['dry_ice'];
 
-    status = ship_to_address(address_dict, parcel_info)
+    status = ship_to_address(address_dict, parcel_info, dry_ice=dry_ice)
     return status
 
 if __name__ == "__main__":
