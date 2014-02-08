@@ -1,6 +1,7 @@
 """
 This is the logic for setting up shipping from easypost
 """
+import json
 
 import easypost
 from keys import EASYPOST_API_KEY
@@ -19,22 +20,24 @@ assert(not hasattr(from_address, 'message'))
 
 def ship_to_address(address_dict, parcel_info):
     # Address validations:
-    assert(address_dict['country'] == 'US')
+    if address_dict['country'] != 'US':
+        return return_json('error', str('Cannot currently do foreign poo shipments'))
+
 
     # Create To Address
     to_address = easypost.Address.create(**address_dict)
     try:
         to_address = to_address.verify()
     except easypost.Error as e:
-        return str(e)
+        return return_json('error', str(e))
     if hasattr(to_address, 'message'):
-        return to_address['message']
+        return return_json('error', to_address['message'])
 
     # create parcel
     try:
         parcel = easypost.Parcel.create(**parcel_info)
     except easypost.Error as e:
-        return str(e)
+        return return_json('error', str(e))
 
     # create shipment
     shipment = easypost.Shipment.create(
@@ -49,5 +52,7 @@ def ship_to_address(address_dict, parcel_info):
     status = {}
     status['tracking_code'] = shipment.tracking_code
     status['label_url'] = shipment.postage_label.label_url
-    return str(status)
+    return return_json('success', status)
 
+def return_json(status, message):
+    return json.dumps({'status': status, 'message': message})

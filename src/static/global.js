@@ -1,4 +1,6 @@
 function submitAddress(){
+  $("#submitButton").hide();
+  $("#submitButtonLoading").show();
   var name = $("#full-name").val();
   var address_line1 = $("#address-line1").val();
   var address_line2 = $("#address-line2").val();
@@ -25,8 +27,21 @@ function submitAddress(){
       weight:weight
     },
     function(data){
-      console.log(data)
-      $("#status").html(data);
-    }
+      if(data['status'] == 'error'){
+        $("#status").addClass('alert-danger');
+        $("#status").removeClass('alert-success');
+        $("#status").html(data['message']);
+      }else if(data['status'] == 'success'){
+        $("#status").addClass('alert-success');
+        $("#status").removeClass('alert-danger');
+        text = 'New label created.  ';
+        text = 'Tracking Code: '+data['message']['tracking_code']+' ';
+        text += '<a href="'+data['label_url']+'">Get Label</a>';
+        $("#status").html(text);
+      }
+      $("#status").show('slow');
+    },
+    'json'
   );
+  return false;
 }

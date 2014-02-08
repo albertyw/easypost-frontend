@@ -1,4 +1,4 @@
-<div class="row form-horizontal">
+<form class="row form-horizontal">
   <!-- Address form -->
   <h2>Address</h2>
 
@@ -91,7 +91,8 @@
   <!-- submit button -->
   <div class="control-group">
     <div class="controls">
-      <button type="button" class="btn btn-primary" onclick="javascript:submitAddress()">Create Label</button>
+      <input type="submit" class="btn btn-primary" id="submitButton" onclick="return submitAddress()" value="Create Label" />
+      <img src="/static/ajax-loader.gif" id="submitButtonLoading" style="display:none" />
     </div>
   </div>
-</div>
+</form>
