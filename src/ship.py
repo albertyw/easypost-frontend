@@ -1,8 +1,6 @@
 """
 This is the logic for setting up shipping from easypost
 """
-import json
-
 import easypost
 from keys import EASYPOST_API_KEY
 easypost.api_key = EASYPOST_API_KEY
@@ -66,4 +64,4 @@ def ship_to_address(address_dict, parcel_info, dry_ice=0):
     return return_json('success', status)
 
 def return_json(status, message):
-    return json.dumps({'status': status, 'message': message})
+    return {'status': status, 'message': message}

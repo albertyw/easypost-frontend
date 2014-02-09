@@ -3,11 +3,13 @@ Base Flask App
 """
 
 from flask import Flask, render_template, request
-app = Flask(__name__)
+import json
 
 from keys import DEBUG
 from ship import ship_to_address
 from countries import COUNTRIES
+
+app = Flask(__name__)
 
 @app.route("/")
 def hello():
@@ -33,7 +35,7 @@ def submit():
     dry_ice = request.form['dry_ice'];
 
     status = ship_to_address(address_dict, parcel_info, dry_ice=dry_ice)
-    return status
+    return json.dumps(status)
 
 if __name__ == "__main__":
     if DEBUG:
