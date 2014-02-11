@@ -8,6 +8,7 @@ function submitAddress(){
   var region = $("#region").val();
   var postal_code = $("#postal-code").val();
   var country = $("#country").val();
+  var phone = $("#phone").val();
   var length = $("#length").val();
   var width = $("#width").val();
   var height = $("#height").val();
@@ -24,6 +25,7 @@ function submitAddress(){
       region:region,
       postal_code:postal_code,
       country:country,
+      phone:phone,
       length:length,
       width:width,
       height:height,

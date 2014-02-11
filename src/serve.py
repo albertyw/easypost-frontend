@@ -25,6 +25,7 @@ def submit():
         'state': request.form['region'],
         'zip': request.form['postal_code'],
         'country': request.form['country'],
+        'phone': request.form['phone'],
     }
     parcel_info = {
         'length': request.form['length'],
