@@ -8,8 +8,8 @@ from email.mime.text import MIMEText
 def email_shipment_info(status, email):
     from_email = "poomailer@internal.openbiome.com"
     body = "Your shipping label has been created.\n"
-    body += "Tracking Code: %s" % (status['message']['tracking_code'],)
-    body += "Download Label: %s" % (status['message']['label_url'],)
+    body += "Tracking Code: %s\n" % (status['message']['tracking_code'],)
+    body += "Download Label: %s\n" % (status['message']['label_url'],)
     msg = MIMEText(body)
 
     msg['Subject'] = 'Poomailer Label'
