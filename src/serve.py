@@ -38,7 +38,8 @@ def submit():
     email = request.form['email'];
 
     status = ship_to_address(address_dict, parcel_info, dry_ice=dry_ice)
-    email_shipment_info(status, email)
+    if status['status'] == 'success':
+        email_shipment_info(status, email)
     return json.dumps(status)
 
 if __name__ == "__main__":
