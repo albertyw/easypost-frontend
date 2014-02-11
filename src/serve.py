@@ -8,6 +8,7 @@ import json
 from keys import DEBUG
 from ship import ship_to_address
 from countries import COUNTRIES
+from record import email_shipment_info
 
 app = Flask(__name__)
 
@@ -34,8 +35,11 @@ def submit():
         'weight': request.form['weight']
     }
     dry_ice = request.form['dry_ice'];
+    email = request.form['email'];
 
     status = ship_to_address(address_dict, parcel_info, dry_ice=dry_ice)
+    if status['status'] == 'success':
+        email_shipment_info(status, email)
     return json.dumps(status)
 
 if __name__ == "__main__":

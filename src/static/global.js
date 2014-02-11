@@ -14,6 +14,7 @@ function submitAddress(){
   var height = $("#height").val();
   var weight = $("#weight").val();
   var dry_ice = $("#dry-ice").val();
+  var email = $("#email").val();
   $.ajax({
     type:'POST',
     url:'/submit',
@@ -30,7 +31,8 @@ function submitAddress(){
       width:width,
       height:height,
       weight:weight,
-      dry_ice:dry_ice
+      dry_ice:dry_ice,
+      email:email
     },
     success:function(data){
       if(data['status'] == 'error'){
