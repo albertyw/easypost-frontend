@@ -20,6 +20,7 @@ def hello():
 def submit():
     address_dict = {
         'name': request.form['name'],
+        'company': request.form['company'],
         'street1': request.form['address_line1'],
         'street2': request.form['address_line2'],
         'city': request.form['city'],
