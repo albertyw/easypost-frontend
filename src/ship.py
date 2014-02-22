@@ -17,11 +17,11 @@ from_address = easypost.Address.create(
 from_address = from_address.verify()
 assert(not hasattr(from_address, 'message'))
 
-def ship_to_address(address_dict, parcel_info, dry_ice=0):
+def ship_to_address(address_dict, parcel_info, options = {}):
     # Address validations:
     if address_dict['country'] != 'US':
         return return_json('error', str('Cannot currently do foreign poo shipments'))
-    if dry_ice > parcel_info['weight']:
+    if options.get('dry_ice_weight', 0) > parcel_info['weight']:
         return return_json('error', str('Dry ice weight is more than package weight'))
 
 
@@ -40,12 +40,12 @@ def ship_to_address(address_dict, parcel_info, dry_ice=0):
     except easypost.Error as e:
         return return_json('error', str(e))
 
+    # Set options
+    if options.get('dry_ice_weight', 0) != 0:
+        options['dry_ice'] = 1
+
+    # Create shipment
     try:
-        # create shipment
-        options = {}
-        if dry_ice != 0:
-            options['dry_ice'] = '1'
-            options['dry_ice_weight'] = dry_ice
         shipment = easypost.Shipment.create(
             to_address = to_address,
             from_address = from_address,

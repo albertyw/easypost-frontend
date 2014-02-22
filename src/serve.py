@@ -34,10 +34,13 @@ def submit():
         'height': request.form['height'],
         'weight': request.form['weight']
     }
-    dry_ice = request.form['dry_ice'];
+    options = {
+        'dry_ice_weight': request.form['dry_ice'],
+        'print_custom_1': request.form['print_custom_1']
+    }
     email = request.form['email'];
 
-    status = ship_to_address(address_dict, parcel_info, dry_ice=dry_ice)
+    status = ship_to_address(address_dict, parcel_info, options=options)
     if status['status'] == 'success':
         email_shipment_info(status, email)
     return json.dumps(status)

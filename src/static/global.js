@@ -9,6 +9,7 @@ function submitAddress(){
   var postal_code = $("#postal-code").val();
   var country = $("#country").val();
   var phone = $("#phone").val();
+  var print_custom_1 = $("#print_custom_1").val();
   var length = $("#length").val();
   var width = $("#width").val();
   var height = $("#height").val();
@@ -27,6 +28,7 @@ function submitAddress(){
       postal_code:postal_code,
       country:country,
       phone:phone,
+      print_custom_1:print_custom_1,
       length:length,
       width:width,
       height:height,
