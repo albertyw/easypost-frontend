@@ -16,30 +16,26 @@ app = Flask(__name__)
 def hello():
     return render_template('home.html', countries=COUNTRIES, title='Home')
 
+def build_data_dict(keys, form):
+    data_dict = {}
+    for key in keys:
+        if key in form:
+            data_dict[key] = form.get(key)
+        else:
+            data_dict[key] = ''
+    return data_dict
+
 @app.route("/submit", methods=["POST"])
 def submit():
-    address_dict = {
-        'name': request.form['name'],
-        'company': request.form['company'],
-        'street1': request.form['address_line1'],
-        'street2': request.form['address_line2'],
-        'city': request.form['city'],
-        'state': request.form['region'],
-        'zip': request.form['postal_code'],
-        'country': request.form['country'],
-        'phone': request.form['phone'],
-    }
-    parcel_info = {
-        'length': request.form['length'],
-        'width': request.form['width'],
-        'height': request.form['height'],
-        'weight': request.form['weight']
-    }
-    options = {
-        'dry_ice_weight': request.form['dry_ice'],
-        'print_custom_1': request.form['print_custom_1']
-    }
-    status = ship_to_address(address_dict, parcel_info, options=options)
+    address_keys = ['name', 'company', 'street1', 'street2', 'city', 'state', 'zip', 'country', 'phone']
+    parcel_keys = ['length', 'width', 'height', 'weight']
+    option_keys = ['dry_ice_weight', 'print_custom_1']
+
+    address_dict = build_data_dict(address_keys, request.form)
+    parcel_dict = build_data_dict(parcel_keys, request.form)
+    options_dict = build_data_dict(option_keys, request.form)
+
+    status = ship_to_address(address_dict, parcel_dict, options=options_dict)
     if status['status'] == 'success':
         email_shipment_info(status)
     return json.dumps(status)
