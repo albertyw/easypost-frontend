@@ -3,11 +3,9 @@ function submitAddress(){
   $("#submitButtonLoading").show();
   data = {};
   $("input[type!='submit']").each(function(index, input){
-      console.log(input);
       data[input.id] = input.value
   });
-  console.log(data);
-  return false;
+  data['country'] = $("#country").val();
   $.ajax({
     type:'POST',
     url:'/submit',

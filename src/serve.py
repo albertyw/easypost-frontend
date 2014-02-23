@@ -39,11 +39,9 @@ def submit():
         'dry_ice_weight': request.form['dry_ice'],
         'print_custom_1': request.form['print_custom_1']
     }
-    email = request.form['email'];
-
     status = ship_to_address(address_dict, parcel_info, options=options)
     if status['status'] == 'success':
-        email_shipment_info(status, email)
+        email_shipment_info(status)
     return json.dumps(status)
 
 if __name__ == "__main__":
