@@ -12,6 +12,7 @@ def email_shipment_info(status):
     body = "Your shipping label has been created.\n"
     body += "Tracking Code: %s\n" % (status['message']['tracking_code'],)
     body += "Download Label: %s\n" % (status['message']['label_url'],)
+    body += "Amount paid: %s\n" % (status['message']['price'],)
     msg = MIMEText(body)
 
     msg['Subject'] = subject

@@ -53,14 +53,21 @@ def ship_to_address(address_dict, parcel_info, options = {}):
             options = options
         )
 
-        # buy postage label with one of the rate objects
-        shipment.buy(rate = shipment.lowest_rate())
+        # Always use FedEx Priority Overnight shipments
+        bought = False
+        for rate in shipment.rates:
+            if rate.carrier=='FedEx' and rate.service=='PRIORITY_OVERNIGHT':
+                shipment.buy(rate = rate)
+                bought = True
+        if not bought:
+            return return_json('error', 'No FedEx rate for priority overnight found')
     except easypost.Error as e:
         return return_json('error', str(e))
 
     status = {}
     status['tracking_code'] = shipment.tracking_code
     status['label_url'] = shipment.postage_label.label_url
+    status['price'] = shipment.selected_rate.rate
     return return_json('success', status)
 
 def return_json(status, message):
