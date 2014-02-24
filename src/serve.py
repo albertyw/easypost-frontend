@@ -2,7 +2,7 @@
 Base Flask App for Poo Mailer
 """
 
-from flask import Flask, session, render_template, request
+from flask import Flask, session, render_template, redirect, url_for, request
 import json
 
 import keys
@@ -15,7 +15,7 @@ app = Flask(__name__)
 # Handles both login and displaying form
 #
 @app.route("/", methods=['GET', 'POST'])
-def hello():
+def root_page():
     if request.method == 'POST':
         if request.form['password'] == keys.LOGIN_PASSWORD:
             session['logged_in'] = True
@@ -27,6 +27,14 @@ def hello():
     else:
         session['logged_in'] = False
         return render_template('login.html')
+
+# Logout page, redirects to root page
+#
+@app.route("/logout")
+def logout():
+    if 'logged_in' in session:
+        session['logged_in'] = False
+    return redirect(url_for('root_page'))
 
 # Handles ajax of form submission
 #
