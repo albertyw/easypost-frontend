@@ -1,7 +1,6 @@
-// Event handler for when a person submits the form
+// Event handler for when the address form is submitted
 function submitAddress(){
-  $("#submitButton").hide();
-  $("#submitButtonLoading").show();
+  startLoading();
   data = {};
   $("input[type!='submit']").each(function(index, input){
       data[input.id] = input.value
@@ -29,6 +28,39 @@ function submitAddress(){
   return false;
 }
 
+// Handler for when the csv form is submitted
+function readCsvForm(){
+  // Check for the various File API support.
+  if (!window.File || !window.FileReader) {
+    alert('Your browser does not support reading files using javascript');
+    return false;
+  }
+  startLoading();
+  var address_file = $("#address_csv")[0].files[0];
+  var address_reader = new FileReader();
+  address_reader.onload = function(e) {
+    var address_contents = e.target.result;
+    var shipment_file = $("#shipment_csv")[0].files[0];
+    var shipment_reader = new FileReader();
+    shipment_reader.onload = function(e) {
+      var shipment_contents = e.target.result;
+      processCsvData(address_contents, shipment_contents);
+    }
+    shipment_reader.readAsText(shipment_file);
+  }
+  address_reader.readAsText(address_file);
+
+  return false;
+}
+
+function processCsvData(address_contents, shipment_contents){
+  //address_contents = 'Customer Org,Ship Name (Attn:),Address 1,Address 2,City,ST,ZIP,Phone,Email@email.com'
+  //shipment_contents = '2/12/2014,Shipment #,Customer Org,Length,Width,Height,Weight,Ice Weight,PO#'
+  console.log(address_contents)
+  console.log(shipment_contents)
+  stopLoading();
+}
+
 // Handler for showing a message from an ajax call to the server
 function showMessage(message, status){
   if(status == 'error'){
@@ -40,9 +72,21 @@ function showMessage(message, status){
   }
   $("#status").html(message);
   $("#status").show('slow');
+  stopLoading();
+}
+
+// Turn the submit button into loading image
+function startLoading(){
+  $("#submitButton").hide();
+  $("#submitButtonLoading").show();
+}
+
+// Turn the loading image back into a submit button
+function stopLoading(){
   $("#submitButton").show();
   $("#submitButtonLoading").hide();
 }
+
 
 // Populate the form with example data
 function fillExampleData(){

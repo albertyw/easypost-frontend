@@ -9,7 +9,28 @@ Home
   <a href="{{ url_for('logout') }}" class="pull-right">Log Out</a>
 </div>
 <div id="status" class="alert" style="display:none"></div>
-<form method="POST">
-  <!-- TODO -->
+<form>
+  <div class="control-group">
+    <label class="control-label">Address CSV</label>
+    <div class="controls">
+      <input id="address_csv" type="file" class="form-control">
+      <p class="help-block"></p>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <label class="control-label">Shipment CSV</label>
+    <div class="controls">
+      <input id="shipment_csv" type="file" class="form-control">
+      <p class="help-block"></p>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <div class="controls">
+      <input type="submit" class="btn btn-primary" id="submitButton" onclick="return readCsvForm()" value="Create Label" />
+      <img src="/static/ajax-loader.gif" id="submitButtonLoading" style="display:none" />
+    </div>
+  </div>
 </form>
 {% endblock %}
