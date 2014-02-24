@@ -15,6 +15,8 @@ from ship import ship_to_address
 from record import email_shipment_info
 
 app = Flask(__name__)
+app.debug = keys.DEBUG
+app.secret_key = keys.SECRET_KEY
 
 # Handles both login and displaying form
 #
@@ -85,6 +87,4 @@ def build_data_dict(keys, form):
 # Start the app
 #
 if __name__ == "__main__":
-    app.debug = keys.DEBUG
-    app.secret_key = keys.SECRET_KEY
     app.run(host='0.0.0.0', port=9001)
