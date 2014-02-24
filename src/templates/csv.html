@@ -5,9 +5,11 @@ Home
 {% block main %}
 <h1>Openbiome.com Poo Mailer</h1>
 <div class="container">
-  <a href="/csv_upload">CSV Upload</a>
+  <a href="/address">Form Upload</a>
   <a href="/logout" class="pull-right">Log Out</a>
 </div>
 <div id="status" class="alert" style="display:none"></div>
-{% include "address.html" %}
+<form method="POST">
+  <!-- TODO -->
+</form>
 {% endblock %}

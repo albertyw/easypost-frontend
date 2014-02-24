@@ -27,10 +27,18 @@ def root_page():
             session['logged_in'] = False
             return render_template('login.html', prompt='Wrong Password')
     if 'logged_in' in session and session['logged_in'] == True:
-        return render_template('home.html', countries=countries.COUNTRIES, title='Home')
+        return redirect(url_for('address_form'))
     else:
         session['logged_in'] = False
         return render_template('login.html')
+
+@app.route("/address")
+def address_form():
+    return render_template('home.html', countries=countries.COUNTRIES)
+
+@app.route("/csv_upload")
+def csv_upload():
+    return render_template('csv.html')
 
 # Logout page, redirects to root page
 #
