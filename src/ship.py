@@ -1,5 +1,5 @@
 """
-This is the logic for setting up shipping from easypost
+This is the logic for making a shipment using EasyPost
 """
 import easypost
 from keys import EASYPOST_API_KEY

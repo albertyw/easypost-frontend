@@ -1,5 +1,5 @@
 """
-Base Flask App
+Base Flask App for Poo Mailer
 """
 
 from flask import Flask, session, render_template, request
@@ -12,6 +12,8 @@ from record import email_shipment_info
 
 app = Flask(__name__)
 
+# Handles both login and displaying form
+#
 @app.route("/", methods=['GET', 'POST'])
 def hello():
     if request.method == 'POST':
@@ -26,15 +28,8 @@ def hello():
         session['logged_in'] = False
         return render_template('login.html')
 
-def build_data_dict(keys, form):
-    data_dict = {}
-    for key in keys:
-        if key in form:
-            data_dict[key] = form.get(key)
-        else:
-            data_dict[key] = ''
-    return data_dict
-
+# Handles ajax of form submission
+#
 @app.route("/submit", methods=["POST"])
 def submit():
     if 'logged_in' not in session:
@@ -53,6 +48,18 @@ def submit():
         email_shipment_info(status)
     return json.dumps(status)
 
+# Helper function for submit() that processes data into dicts
+def build_data_dict(keys, form):
+    data_dict = {}
+    for key in keys:
+        if key in form:
+            data_dict[key] = form.get(key)
+        else:
+            data_dict[key] = ''
+    return data_dict
+
+# Start the app
+#
 if __name__ == "__main__":
     app.debug = keys.DEBUG
     app.secret_key = keys.SECRET_KEY
