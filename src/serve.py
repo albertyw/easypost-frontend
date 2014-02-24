@@ -27,7 +27,7 @@ def root_page():
             session['logged_in'] = False
             return render_template('login.html', prompt='Wrong Password')
     if 'logged_in' in session and session['logged_in'] == True:
-        return render_template('home.html', countries=countries.COUNTRIES, title='Home')
+        return redirect(url_for('address_form'))
     else:
         session['logged_in'] = False
         return render_template('login.html')
@@ -39,6 +39,18 @@ def logout():
     if 'logged_in' in session:
         session['logged_in'] = False
     return redirect(url_for('root_page'))
+
+# Form for manually entering in shipment information
+#
+@app.route("/address_form")
+def address_form():
+    return render_template('address.html', countries=countries.COUNTRIES)
+
+# Form for using two csv files to enter in shipment information
+#
+@app.route("/csv_form")
+def csv_form():
+    return render_template('csv.html')
 
 # Handles ajax of form submission
 #

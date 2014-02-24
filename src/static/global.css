@@ -1,3 +1,8 @@
+#body {
+    margin-left: 375px;
+    margin-right: 375px;
+    margin-bottom: 50px;
+}
 .address-dimensions {
     width: 50px;
     display: inline;

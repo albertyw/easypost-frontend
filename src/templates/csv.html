@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}
+CSV Form
+{% endblock %}
+{% block main %}
+<h1>Openbiome.com Poo Mailer</h1>
+<div class="container">
+  <a href="{{ url_for('address_form') }}">Form Upload</a>
+  <a href="{{ url_for('logout') }}" class="pull-right">Log Out</a>
+</div>
+<div id="status" class="alert" style="display:none"></div>
+<form>
+  <h2>CSVs</h2>
+  Please make sure that there are no commas in your files other than those used
+  to separate fields.
+  <div class="control-group">
+    <label class="control-label">Address CSV</label>
+    <div class="controls">
+      <input id="address_csv" type="file" class="form-control">
+      <p class="help-block">Format: Company/Organization, Name, Address 1, Address 2, City, State, ZIP, Phone, Email</p>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <label class="control-label">Shipment CSV</label>
+    <div class="controls">
+      <input id="shipment_csv" type="file" class="form-control">
+      <p class="help-block">Format: Date, Shipment #, Company/Organization,  Length, Width, Height, Weight, Dry Ice Weight, Custom Line 1</p>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <div class="controls">
+      <input type="submit" class="btn btn-primary" id="submitButton" onclick="return readCsvForm()" value="Create Label" />
+      <img src="/static/ajax-loader.gif" id="submitButtonLoading" style="display:none" />
+    </div>
+  </div>
+</form>
+{% endblock %}

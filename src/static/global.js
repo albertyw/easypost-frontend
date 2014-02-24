@@ -1,12 +1,76 @@
-// Event handler for when a person submits the form
+/**
+ * Form Handlers
+ **/
+
+// Event handler for when the address form is submitted
 function submitAddress(){
-  $("#submitButton").hide();
-  $("#submitButtonLoading").show();
+  startLoading();
   data = {};
   $("input[type!='submit']").each(function(index, input){
       data[input.id] = input.value
   });
   data['country'] = $("#country").val();
+  ajaxAddress(data);
+  return false;
+}
+
+// Handler for when the csv form is submitted
+function readCsvForm(){
+  // Check for the various File API support.
+  if (!window.File || !window.FileReader) {
+    alert('Your browser does not support reading files using javascript');
+    return false;
+  }
+  startLoading();
+  var address_file = $("#address_csv")[0].files[0];
+  var address_reader = new FileReader();
+  address_reader.onload = function(e) {
+    var address_contents = e.target.result;
+    var shipment_file = $("#shipment_csv")[0].files[0];
+    var shipment_reader = new FileReader();
+    shipment_reader.onload = function(e) {
+      var shipment_contents = e.target.result;
+      processCsvData(address_contents, shipment_contents);
+    }
+    shipment_reader.readAsText(shipment_file);
+  }
+  address_reader.readAsText(address_file);
+
+  return false;
+}
+
+
+/**
+ * Data processing and pushing
+ **/
+
+// After reading the selected CSVs, parse them so that they can be uploaded by AJAX
+function processCsvData(address_contents, shipment_contents){
+  // see data/address.csv and data/shipment.csv for examples of the data
+  address_contents = address_contents.split(',');
+  shipment_contents = shipment_contents.split(',');
+  data = {};
+  data.name = address_contents[1];
+  data.company = address_contents[0];
+  data.street1 = address_contents[2];
+  data.street2 = address_contents[3];
+  data.city = address_contents[4];
+  data.state = address_contents[5];
+  data.zip = address_contents[6];
+  data.country = 'US'
+  data.phone = address_contents[7];
+  data.print_custom_1 = shipment_contents[8].trim();
+  data.length = shipment_contents[3];
+  data.width = shipment_contents[4];
+  data.height = shipment_contents[5];
+  data.weight = shipment_contents[6];
+  data.dry_ice_weight = shipment_contents[7];
+  ajaxAddress(data);
+  stopLoading();
+}
+
+// Function to send data to server using ajax
+function ajaxAddress(data){
   $.ajax({
     type:'POST',
     url:'/submit',
@@ -26,8 +90,12 @@ function submitAddress(){
     },
     dataType:'json'
   });
-  return false;
 }
+
+
+/**
+ * UI
+ **/
 
 // Handler for showing a message from an ajax call to the server
 function showMessage(message, status){
@@ -40,9 +108,25 @@ function showMessage(message, status){
   }
   $("#status").html(message);
   $("#status").show('slow');
+  stopLoading();
+}
+
+// Turn the submit button into loading image
+function startLoading(){
+  $("#submitButton").hide();
+  $("#submitButtonLoading").show();
+}
+
+// Turn the loading image back into a submit button
+function stopLoading(){
   $("#submitButton").show();
   $("#submitButtonLoading").hide();
 }
+
+
+/**
+ * Utils
+ **/
 
 // Populate the form with example data
 function fillExampleData(){

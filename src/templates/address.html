@@ -1,4 +1,16 @@
-<form class="row form-horizontal">
+{% extends "base.html" %}
+{% block title %}
+Address Form
+{% endblock %}
+{% block main %}
+<h1>Openbiome.com Poo Mailer</h1>
+<div class="container">
+  <a href="{{ url_for('csv_form') }}">CSV Upload</a>
+  <a href="{{ url_for('logout') }}" class="pull-right">Log Out</a>
+</div>
+<div id="status" class="alert" style="display:none"></div>
+
+<form>
   <!-- Address form -->
   <h2>Address</h2>
 
@@ -128,3 +140,5 @@
     </div>
   </div>
 </form>
+
+{% endblock %}
