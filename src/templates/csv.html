@@ -5,8 +5,8 @@ Home
 {% block main %}
 <h1>Openbiome.com Poo Mailer</h1>
 <div class="container">
-  <a href="/address">Form Upload</a>
-  <a href="/logout" class="pull-right">Log Out</a>
+  <a href="{{ url_for('address_form') }}">Form Upload</a>
+  <a href="{{ url_for('logout') }}" class="pull-right">Log Out</a>
 </div>
 <div id="status" class="alert" style="display:none"></div>
 <form method="POST">

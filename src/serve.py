@@ -32,14 +32,6 @@ def root_page():
         session['logged_in'] = False
         return render_template('login.html')
 
-@app.route("/address")
-def address_form():
-    return render_template('home.html', countries=countries.COUNTRIES)
-
-@app.route("/csv_upload")
-def csv_upload():
-    return render_template('csv.html')
-
 # Logout page, redirects to root page
 #
 @app.route("/logout")
@@ -47,6 +39,18 @@ def logout():
     if 'logged_in' in session:
         session['logged_in'] = False
     return redirect(url_for('root_page'))
+
+# Form for manually entering in shipment information
+#
+@app.route("/address_form")
+def address_form():
+    return render_template('address.html', countries=countries.COUNTRIES)
+
+# Form for using two csv files to enter in shipment information
+#
+@app.route("/csv_form")
+def csv_form():
+    return render_template('csv.html')
 
 # Handles ajax of form submission
 #
