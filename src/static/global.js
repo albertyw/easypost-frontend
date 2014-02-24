@@ -44,9 +44,9 @@ function readCsvForm(){
  * Data processing and pushing
  **/
 
+// After reading the selected CSVs, parse them so that they can be uploaded by AJAX
 function processCsvData(address_contents, shipment_contents){
-  //address_contents = 'Customer Org,Ship Name (Attn:),Address 1,Address 2,City,ST,ZIP,Phone,Email@email.com'
-  //shipment_contents = '2/12/2014,Shipment #,Customer Org,Length,Width,Height,Weight,Ice Weight,PO#'
+  // see data/address.csv and data/shipment.csv for examples of the data
   address_contents = address_contents.split(',');
   shipment_contents = shipment_contents.split(',');
   data = {};

@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block title %}
-Home
+CSV Form
 {% endblock %}
 {% block main %}
 <h1>Openbiome.com Poo Mailer</h1>
@@ -10,11 +10,14 @@ Home
 </div>
 <div id="status" class="alert" style="display:none"></div>
 <form>
+  <h2>CSVs</h2>
+  Please make sure that there are no commas in your files other than those used
+  to separate fields.
   <div class="control-group">
     <label class="control-label">Address CSV</label>
     <div class="controls">
       <input id="address_csv" type="file" class="form-control">
-      <p class="help-block"></p>
+      <p class="help-block">Format: Customer Org,Ship Name (Attn:),Address 1,Address 2,City,ST,ZIP,Phone,Email@email.com</p>
     </div>
   </div>
 
@@ -22,7 +25,7 @@ Home
     <label class="control-label">Shipment CSV</label>
     <div class="controls">
       <input id="shipment_csv" type="file" class="form-control">
-      <p class="help-block"></p>
+      <p class="help-block">Format: Date,Shipment #,Customer Org,Length,Width,Height,Weight,Ice Weight,PO#</p>
     </div>
   </div>
 
