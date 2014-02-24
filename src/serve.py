@@ -2,19 +2,29 @@
 Base Flask App
 """
 
-from flask import Flask, render_template, request
+from flask import Flask, session, render_template, request
 import json
 
-from keys import DEBUG
+import keys
 from ship import ship_to_address
 from countries import COUNTRIES
 from record import email_shipment_info
 
 app = Flask(__name__)
 
-@app.route("/")
+@app.route("/", methods=['GET', 'POST'])
 def hello():
-    return render_template('home.html', countries=COUNTRIES, title='Home')
+    if request.method == 'POST':
+        if request.form['password'] == keys.LOGIN_PASSWORD:
+            session['logged_in'] = True
+        else:
+            session['logged_in'] = False
+            return render_template('login.html', prompt='Wrong Password')
+    if 'logged_in' in session and session['logged_in'] == True:
+        return render_template('home.html', countries=COUNTRIES, title='Home')
+    else:
+        session['logged_in'] = False
+        return render_template('login.html')
 
 def build_data_dict(keys, form):
     data_dict = {}
@@ -27,6 +37,9 @@ def build_data_dict(keys, form):
 
 @app.route("/submit", methods=["POST"])
 def submit():
+    if 'logged_in' not in session:
+        status = {'status': 'error', 'message': 'You are not logged in'}
+        return json.dumps(status)
     address_keys = ['name', 'company', 'street1', 'street2', 'city', 'state', 'zip', 'country', 'phone']
     parcel_keys = ['length', 'width', 'height', 'weight']
     option_keys = ['dry_ice_weight', 'print_custom_1']
@@ -41,6 +54,6 @@ def submit():
     return json.dumps(status)
 
 if __name__ == "__main__":
-    if DEBUG:
-        app.debug = True
+    app.debug = keys.DEBUG
+    app.secret_key = keys.SECRET_KEY
     app.run(host='0.0.0.0', port=9001)
