@@ -4,10 +4,14 @@ Base Flask App for Poo Mailer
 
 from flask import Flask, session, render_template, redirect, url_for, request
 import json
+import os
+import sys
+parent_path = os.path.dirname(os.path.realpath(__file__))+'/../'
+sys.path.append(parent_path)
 
+from data import countries
 import keys
 from ship import ship_to_address
-from countries import COUNTRIES
 from record import email_shipment_info
 
 app = Flask(__name__)
@@ -23,7 +27,7 @@ def root_page():
             session['logged_in'] = False
             return render_template('login.html', prompt='Wrong Password')
     if 'logged_in' in session and session['logged_in'] == True:
-        return render_template('home.html', countries=COUNTRIES, title='Home')
+        return render_template('home.html', countries=countries.COUNTRIES, title='Home')
     else:
         session['logged_in'] = False
         return render_template('login.html')
