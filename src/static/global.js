@@ -65,7 +65,14 @@ function processCsvData(address_contents, shipment_contents){
   data.height = shipment_contents[5];
   data.weight = shipment_contents[6];
   data.dry_ice_weight = shipment_contents[7];
-  ajaxAddress(data);
+  var confirmationText = "Please Confirm\n";
+  $.each(data, function(key, value){
+    confirmationText += key+' - '+value+"\n";
+  });
+  var confirmation = confirm(confirmationText);
+  if(confirmation){
+    ajaxAddress(data);
+  }
   stopLoading();
 }
 
