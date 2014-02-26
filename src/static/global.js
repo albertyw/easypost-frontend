@@ -73,7 +73,6 @@ function processCsvData(address_contents, shipment_contents){
   if(confirmation){
     ajaxAddress(data);
   }
-  stopLoading();
 }
 
 // Function to send data to server using ajax
@@ -109,13 +108,15 @@ function showMessage(message, status){
   if(status == 'error'){
     $("#status").addClass('alert-danger');
     $("#status").removeClass('alert-success');
+    var reset = false;
   }else if(status == 'success'){
     $("#status").addClass('alert-success');
     $("#status").removeClass('alert-danger');
+    var reset = true;
   }
   $("#status").html(message);
   $("#status").show('slow');
-  stopLoading();
+  stopLoading(reset);
 }
 
 // Turn the submit button into loading image
@@ -125,9 +126,10 @@ function startLoading(){
 }
 
 // Turn the loading image back into a submit button
-function stopLoading(){
+function stopLoading(reset){
   $("#submitButton").show();
   $("#submitButtonLoading").hide();
+  if(reset) $("input[type!='submit']").val('');
 }
 
 
