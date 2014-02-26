@@ -2,18 +2,10 @@
 This is the logic for making a shipment using EasyPost
 """
 import easypost
-from keys import EASYPOST_API_KEY
+from keys import EASYPOST_API_KEY, FROM_ADDRESS
 easypost.api_key = EASYPOST_API_KEY
 
-from_address = easypost.Address.create(
-        company = 'Alm Laboratory',
-        street1 = '500 Technology Square 3rd Floor',
-        city = 'Cambridge',
-        state = 'MA',
-        zip = '02139',
-        country = 'US',
-        phone = '6175759658'
-    )
+from_address = easypost.Address.create(**FROM_ADDRESS)
 from_address = from_address.verify()
 assert(not hasattr(from_address, 'message'))
 

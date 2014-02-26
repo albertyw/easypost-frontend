@@ -49,14 +49,14 @@ def logout():
 @app.route("/address_form")
 @login_required
 def address_form():
-    return render_template('address.html', countries=countries.COUNTRIES)
+    return render_template('address.html', countries=countries.COUNTRIES, from_address = keys.FROM_ADDRESS)
 
 # Form for using two csv files to enter in shipment information
 #
 @app.route("/csv_form")
 @login_required
 def csv_form():
-    return render_template('csv.html')
+    return render_template('csv.html', from_address = keys.FROM_ADDRESS)
 
 # Handles ajax of form submission
 #
