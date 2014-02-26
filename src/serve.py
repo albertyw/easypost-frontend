@@ -11,6 +11,7 @@ sys.path.append(parent_path)
 
 from data import countries
 import keys
+from helpers import login_required, build_data_dict
 from ship import ship_to_address
 from record import email_shipment_info
 
@@ -18,10 +19,11 @@ app = Flask(__name__)
 app.debug = keys.DEBUG
 app.secret_key = keys.SECRET_KEY
 
+
 # Handles both login and displaying form
 #
 @app.route("/", methods=['GET', 'POST'])
-def root_page():
+def root():
     if request.method == 'POST':
         if request.form['password'] == keys.LOGIN_PASSWORD:
             session['logged_in'] = True
@@ -34,29 +36,32 @@ def root_page():
         session['logged_in'] = False
         return render_template('login.html')
 
-# Logout page, redirects to root page
+# Logout page, redirects to root
 #
 @app.route("/logout")
 def logout():
     if 'logged_in' in session:
         session['logged_in'] = False
-    return redirect(url_for('root_page'))
+    return redirect(url_for('root'))
 
 # Form for manually entering in shipment information
 #
 @app.route("/address_form")
+@login_required
 def address_form():
     return render_template('address.html', countries=countries.COUNTRIES)
 
 # Form for using two csv files to enter in shipment information
 #
 @app.route("/csv_form")
+@login_required
 def csv_form():
     return render_template('csv.html')
 
 # Handles ajax of form submission
 #
 @app.route("/submit", methods=["POST"])
+@login_required
 def submit():
     if 'logged_in' not in session:
         status = {'status': 'error', 'message': 'You are not logged in'}
@@ -73,16 +78,6 @@ def submit():
     if status['status'] == 'success':
         email_shipment_info(status)
     return json.dumps(status)
-
-# Helper function for submit() that processes data into dicts
-def build_data_dict(keys, form):
-    data_dict = {}
-    for key in keys:
-        if key in form:
-            data_dict[key] = form.get(key)
-        else:
-            data_dict[key] = ''
-    return data_dict
 
 # Start the app
 #
