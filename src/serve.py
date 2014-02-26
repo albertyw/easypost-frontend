@@ -10,14 +10,14 @@ parent_path = os.path.dirname(os.path.realpath(__file__))+'/../'
 sys.path.append(parent_path)
 
 from data import countries
-import keys
+import settings
 from helpers import login_required, ajax_login_required, build_data_dict
 from ship import ship_to_address
 from record import email_shipment_info
 
 app = Flask(__name__)
-app.debug = keys.DEBUG
-app.secret_key = keys.SECRET_KEY
+app.debug = settings.DEBUG
+app.secret_key = settings.SECRET_KEY
 
 
 # Handles both login and displaying form
@@ -25,7 +25,7 @@ app.secret_key = keys.SECRET_KEY
 @app.route("/", methods=['GET', 'POST'])
 def root():
     if request.method == 'POST':
-        if request.form['password'] == keys.LOGIN_PASSWORD:
+        if request.form['password'] == settings.LOGIN_PASSWORD:
             session['logged_in'] = True
         else:
             session['logged_in'] = False
@@ -49,14 +49,14 @@ def logout():
 @app.route("/address_form")
 @login_required
 def address_form():
-    return render_template('address.html', countries=countries.COUNTRIES, from_address = keys.FROM_ADDRESS)
+    return render_template('address.html', countries=countries.COUNTRIES, from_address = settings.FROM_ADDRESS)
 
 # Form for using two csv files to enter in shipment information
 #
 @app.route("/csv_form")
 @login_required
 def csv_form():
-    return render_template('csv.html', from_address = keys.FROM_ADDRESS)
+    return render_template('csv.html', from_address = settings.FROM_ADDRESS)
 
 # Handles ajax of form submission
 #

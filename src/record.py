@@ -4,7 +4,7 @@ This is the part of the website that manages records of shipments
 import smtplib
 from email.mime.text import MIMEText
 
-from keys import DEBUG, SHIPMENT_EMAILS
+import settings
 
 def email_shipment_info(status):
     from_email = "poomailer@internal.openbiome.com"
@@ -17,14 +17,14 @@ def email_shipment_info(status):
 
     msg['Subject'] = subject
     msg['From'] = from_email
-    msg['To'] = ', '.join(SHIPMENT_EMAILS)
+    msg['To'] = ', '.join(settings.SHIPMENT_EMAILS)
 
-    if DEBUG:
-        print "Sent email To %s; From %s" % (str(SHIPMENT_EMAILS), from_email)
+    if settings.DEBUG:
+        print "Sent email To %s; From %s" % (str(settings.SHIPMENT_EMAILS), from_email)
         print "Subject: %s" % subject
         print "Body: %s" % body
     else:
         s = smtplib.SMTP('localhost')
-        s.sendmail(from_email, SHIPMENT_EMAILS, msg.as_string())
+        s.sendmail(from_email, settings.SHIPMENT_EMAILS, msg.as_string())
         s.quit()
     return True
