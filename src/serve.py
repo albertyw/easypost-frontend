@@ -11,7 +11,7 @@ sys.path.append(parent_path)
 
 from data import countries
 import keys
-from helpers import login_required, build_data_dict
+from helpers import login_required, ajax_login_required, build_data_dict
 from ship import ship_to_address
 from record import email_shipment_info
 
@@ -61,11 +61,8 @@ def csv_form():
 # Handles ajax of form submission
 #
 @app.route("/submit", methods=["POST"])
-@login_required
+@ajax_login_required
 def submit():
-    if 'logged_in' not in session:
-        status = {'status': 'error', 'message': 'You are not logged in'}
-        return json.dumps(status)
     address_keys = ['name', 'company', 'street1', 'street2', 'city', 'state', 'zip', 'country', 'phone']
     parcel_keys = ['length', 'width', 'height', 'weight']
     option_keys = ['dry_ice_weight', 'print_custom_1']
